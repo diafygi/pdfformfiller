@@ -1,20 +1,20 @@
 from distutils.core import setup
 
-with open("requirements.txt") as f:
-    requirements = f.read().splitlines()
-
 setup(
     name = "PdfFormFiller",
     packages = ["pdfformfiller"],
-    version = "0.2",
+    version = "0.3",
     description = "Insert text into pdf templates",
     keywords = ["pdf", "reportlab", "PyPDF2"],
     license = "GPLv3",
     author = "Daniel Roesler",
     author_email = "diafygi@gmail.com",
     url = "https://github.com/diafygi/pdfformfiller",
-    download_url = "https://github.com/diafygi/pdfformfiller/archive/0.2.tar.gz",
-    install_requires = requirements,
+    download_url = "https://github.com/diafygi/pdfformfiller/archive/0.3.tar.gz",
+    install_requires = [
+        "PyPDF2>=1.25.1",
+        "reportlab>=3.3.0",
+    ],
     classifiers = [
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
