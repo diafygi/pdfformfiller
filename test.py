@@ -1,7 +1,8 @@
 import unittest
+from io import BytesIO
 from hashlib import sha256
-from StringIO import StringIO
 from base64 import b64decode
+from subprocess import Popen, PIPE
 from tempfile import NamedTemporaryFile
 from reportlab.lib.styles import ParagraphStyle
 
@@ -12,24 +13,29 @@ class TestPdfFormFiller(unittest.TestCase):
 
     def setUp(self):
         "Reset the original pdf file's pointer"
-        self.pdf = StringIO(hello_world_pdf)
-        self.out = StringIO()
+        self.pdf = BytesIO(hello_world_pdf)
+        self.out = BytesIO()
 
     def assertHashOutput(self, pdf, known_hash):
-        "Compare pdf sha256 hash to known hash"
+        "Compare png image of pdf to known sha256 hash"
         # Uncomment to save pdf to disk (used for looking at results)
         # pdf.seek(0); out = open("out.pdf", "wb"); out.write(pdf.read()); out.close();
         pdf.seek(0)
-        pdf_hash = sha256(pdf.read()).hexdigest()
+        p = Popen(["pdftoppm", "-png", "-r", "72", "-f", "1", "-l", "1", "-"],
+            stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        out, err = p.communicate(input=pdf.read())
+        if err:
+            raise IOError(err)
+        pdf_hash = sha256(out).hexdigest()
         self.assertEqual(pdf_hash, known_hash,
-            "pdf hash ({}) doesn't match expected hash ({})".format(
+            "pdf hash ({}) doesn't match expected hashes ({})".format(
                 pdf_hash, known_hash))
 
     def test_no_fields(self):
         "Still exports even when no text fields are added"
         filler = PdfFormFiller(self.pdf)
         filler.write(self.out)
-        self.assertHashOutput(self.out, "f6526f729e0ef207ef10425fbe7fd87bf4fc3c03e61f026a88f2addc3a9a3179")
+        self.assertHashOutput(self.out, "726d27c0809a73cedde958cb204a897c8f81fc367ca2aadc8101e6d38be8a9c5")
 
     def test_string_output_path(self):
         "can write to string outputFile"
@@ -37,7 +43,7 @@ class TestPdfFormFiller(unittest.TestCase):
         filler.add_text("Joe Smith", 0, (50, 50), (500, 100))
         tmpout = NamedTemporaryFile()
         filler.write(tmpout.name)
-        self.assertHashOutput(tmpout, "07925c2d87ec34f46457d0bc2f4edee02d9f197520ef502d0f4a2057350e3121")
+        self.assertHashOutput(tmpout, "d961e57867788345a3bc0ea3adaa34bb81bc439848f30472302bad6ce8e1b3a6")
 
     def test_add_fields(self):
         "Can add several text fields"
@@ -45,21 +51,21 @@ class TestPdfFormFiller(unittest.TestCase):
         filler.add_text("Joe Smith", 0, (50, 50), (500, 100))
         filler.add_text("Joe Smith", 0, (50, 200), (500, 250))
         filler.write(self.out)
-        self.assertHashOutput(self.out, "95999787b497949a3e99edc01c7bb25502a59baba76d3de5da127993ba5ac492")
+        self.assertHashOutput(self.out, "e2813583628380bc084cdede1531739034f2823849bcb9339368abe845af00d7")
 
     def test_inlude_boxes(self):
         "Red field boxes appear debugging"
         filler = PdfFormFiller(self.pdf, boxes=True)
         filler.add_text("Joe Smith", 0, (50, 50), (500, 100))
         filler.write(self.out)
-        self.assertHashOutput(self.out, "d1ce470e34a1026292eac7645995addd232ab332964732f1981ca51a270a0093")
+        self.assertHashOutput(self.out, "bf1bcef99f6de11bdf542f40eebd47f1dfc4861e5ec4d6ce65d0acd9228abd2e")
 
     def test_custom_boxes(self):
         "Blue field boxes appear debugging"
         filler = PdfFormFiller(self.pdf, boxes=(0, 0, 255))
         filler.add_text("Joe Smith", 0, (50, 50), (500, 100))
         filler.write(self.out)
-        self.assertHashOutput(self.out, "c5fa450428828ada91e9b7966b0d23d00d48a9af4a4f33fb1aa84d64ba9d1ca5")
+        self.assertHashOutput(self.out, "2dd58978209ddd2c531987d5b12115ea7729e87e7aa7115b09cc18aa5ff45fef")
 
     def test_custom_default_style(self):
         "custom default small text style"
@@ -67,7 +73,7 @@ class TestPdfFormFiller(unittest.TestCase):
         filler = PdfFormFiller(self.pdf, style=customstyle)
         filler.add_text("Joe Smith", 0, (50, 50), (500, 100))
         filler.write(self.out)
-        self.assertHashOutput(self.out, "8678b49b76b4703277ff07e76fba3e6f4032c62a812fec86b056c2ace7cb3f64")
+        self.assertHashOutput(self.out, "c60753864a1cb130519856f0a1bb0ab51ab0fcbea7baa4f36f5e101bfe6409b0")
 
     def test_custom_field_style(self):
         "custom default small text style"
@@ -75,7 +81,7 @@ class TestPdfFormFiller(unittest.TestCase):
         filler = PdfFormFiller(self.pdf)
         filler.add_text("Joe Smith", 0, (50, 50), (500, 100), style=customstyle)
         filler.write(self.out)
-        self.assertHashOutput(self.out, "8678b49b76b4703277ff07e76fba3e6f4032c62a812fec86b056c2ace7cb3f64")
+        self.assertHashOutput(self.out, "c60753864a1cb130519856f0a1bb0ab51ab0fcbea7baa4f36f5e101bfe6409b0")
 
     def test_custom_default_padding(self):
         "custom default small text style"
@@ -83,7 +89,7 @@ class TestPdfFormFiller(unittest.TestCase):
         filler = PdfFormFiller(self.pdf, padding=custompadding)
         filler.add_text("Joe Smith", 0, (50, 50), (500, 100))
         filler.write(self.out)
-        self.assertHashOutput(self.out, "915c3437dba9f6670839346665bcb6d75a9b760e46f520be26cdcb248fa4236d")
+        self.assertHashOutput(self.out, "2a195aa2ce8a1cc40465cffb39bcc187bd4555679611589083b8019fbe0933ef")
 
     def test_custom_field_padding(self):
         "custom default small text style"
@@ -91,7 +97,7 @@ class TestPdfFormFiller(unittest.TestCase):
         filler = PdfFormFiller(self.pdf)
         filler.add_text("Joe Smith", 0, (50, 50), (500, 100), padding=custompadding)
         filler.write(self.out)
-        self.assertHashOutput(self.out, "915c3437dba9f6670839346665bcb6d75a9b760e46f520be26cdcb248fa4236d")
+        self.assertHashOutput(self.out, "2a195aa2ce8a1cc40465cffb39bcc187bd4555679611589083b8019fbe0933ef")
 
 
 # Hello World example pdf

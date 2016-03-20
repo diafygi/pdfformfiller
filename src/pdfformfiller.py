@@ -1,10 +1,13 @@
-import StringIO
+from io import BytesIO
 from collections import namedtuple, defaultdict
 from PyPDF2 import PdfFileWriter, PdfFileReader
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.platypus import Paragraph, Frame, KeepInFrame
 from reportlab.lib.styles import getSampleStyleSheet
-
+try:
+    basestring
+except NameError:
+    basestring = str
 
 TextField = namedtuple("TextField",
     ["text", "x1", "y1", "width", "height", "style", "padding"])
@@ -140,7 +143,7 @@ class PdfFormFiller(defaultdict):
             if len(self[pagenum]) > 0:
                 mediaBox = self.pdf.getPage(pagenum).mediaBox
                 pagesize = (mediaBox[2] - mediaBox[0], mediaBox[3] - mediaBox[1])
-                packet = StringIO.StringIO()
+                packet = BytesIO()
                 canvas = Canvas(packet, pagesize=pagesize)
                 if self.boxes:
                     canvas.setStrokeColorRGB(*self.boxes)
