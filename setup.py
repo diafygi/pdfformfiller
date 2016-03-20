@@ -6,14 +6,14 @@ with open("requirements.txt") as f:
 setup(
     name = "PdfFormFiller",
     packages = ["pdfformfiller"],
-    version = "0.1",
+    version = "0.2",
     description = "Insert text into pdf templates",
     keywords = ["pdf", "reportlab", "PyPDF2"],
     license = "GPLv3",
     author = "Daniel Roesler",
     author_email = "diafygi@gmail.com",
     url = "https://github.com/diafygi/pdfformfiller",
-    download_url = "https://github.com/diafygi/pdfformfiller/archive/0.1.tar.gz",
+    download_url = "https://github.com/diafygi/pdfformfiller/archive/0.2.tar.gz",
     install_requires = requirements,
     classifiers = [
         "Programming Language :: Python",
