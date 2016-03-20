@@ -1,15 +1,20 @@
-# chardet's setup.py
 from distutils.core import setup
+
+with open("requirements.txt") as f:
+    requirements = f.read().splitlines()
+
 setup(
     name = "PdfFormFiller",
     packages = ["pdfformfiller"],
     version = "0.1",
     description = "Insert text into pdf templates",
+    keywords = ["pdf", "reportlab", "PyPDF2"],
+    license = "GPLv3",
     author = "Daniel Roesler",
     author_email = "diafygi@gmail.com",
     url = "https://github.com/diafygi/pdfformfiller",
     download_url = "https://github.com/diafygi/pdfformfiller/archive/0.1.tar.gz",
-    keywords = ["pdf", "reportlab", "PyPDF2"],
+    install_requires = requirements,
     classifiers = [
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
