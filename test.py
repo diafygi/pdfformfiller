@@ -24,8 +24,6 @@ class TestPdfFormFiller(unittest.TestCase):
         p = Popen(["pdftoppm", "-png", "-r", "72", "-f", "1", "-l", "1", "-"],
             stdin=PIPE, stdout=PIPE, stderr=PIPE)
         out, err = p.communicate(input=pdf.read())
-        if err:
-            raise IOError(err)
         pdf_hash = sha256(out).hexdigest()
         self.assertEqual(pdf_hash, known_hash,
             "pdf hash ({}) doesn't match expected hashes ({})".format(
