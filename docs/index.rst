@@ -14,7 +14,7 @@ PdfFormFiller Documentation
 Quickstart
 ==========
 
-Source Code: https://github.com/diafygi/pdffromfiller
+Source Code: https://github.com/diafygi/pdfformfiller
 
 Welcome to the documentation for PdfFormFiller! This is a library that lets you
 easy insert text into a pdf. It is super useful when you need to prefill an
