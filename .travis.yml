@@ -12,6 +12,6 @@ before_install:
 install:
   - pip install -r dev_requirements.txt
 script:
-  - coverage run test.py
+  - coverage run --source ./ test.py
 after_success:
   - coveralls
