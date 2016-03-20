@@ -1,0 +1,2 @@
+PyPDF2==1.25.1
+reportlab==3.3.0
