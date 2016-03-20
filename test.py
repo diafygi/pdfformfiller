@@ -6,7 +6,7 @@ from subprocess import Popen, PIPE
 from tempfile import NamedTemporaryFile
 from reportlab.lib.styles import ParagraphStyle
 
-from src.pdfformfiller import PdfFormFiller
+from pdfformfiller import PdfFormFiller
 
 class TestPdfFormFiller(unittest.TestCase):
     """ Tests for PdfFormFiller """
