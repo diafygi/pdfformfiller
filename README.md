@@ -1,5 +1,9 @@
 # PdfFormFiller
 
+[![Build Status](https://travis-ci.org/diafygi/acme-tiny.svg?branch=master)](https://travis-ci.org/diafygi/acme-tiny)
+[![Coverage Status](https://coveralls.io/repos/github/diafygi/pdfformfiller/badge.svg?branch=master)](https://coveralls.io/github/diafygi/pdfformfiller?branch=master)
+[![Documentation Status](https://readthedocs.org/projects/pdfformfiller/badge/?version=latest)](http://pdfformfiller.readthedocs.org/en/latest/?badge=latest)
+
 This is a python library that lets you easily insert text into a pdf. It is
 super useful when you need to prefill an existing pdf template (for example, a
 grant application form) with your own data.
