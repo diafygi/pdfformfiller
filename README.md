@@ -1,7 +1,7 @@
 # PdfFormFiller
 
 [![Build Status](https://travis-ci.org/diafygi/pdfformfiller.svg?branch=master)](https://travis-ci.org/diafygi/pdfformfiller)
-[![Coverage Status](https://coveralls.io/repos/github/diafygi/pdfformfiller/badge.svg?branch=master)](https://coveralls.io/github/diafygi/pdfformfiller?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/diafygi/pdfformfiller/badge.svg?branch=master&badge=1)](https://coveralls.io/github/diafygi/pdfformfiller?branch=master)
 [![Documentation Status](https://readthedocs.org/projects/pdfformfiller/badge/?version=latest)](http://pdfformfiller.readthedocs.org/en/latest/?badge=latest)
 
 This is a python library that lets you easily insert text into a pdf. It is
