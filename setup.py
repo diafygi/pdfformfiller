@@ -8,7 +8,7 @@ setup(
     author = "Daniel Roesler",
     author_email = "diafygi@gmail.com",
     url = "https://github.com/diafygi/pdfformfiller",
-    download_url = "https://github.com/diafygi/pdfformfiller/download/0.1.tar.gz",
+    download_url = "https://github.com/diafygi/pdfformfiller/archive/0.1.tar.gz",
     keywords = ["pdf", "reportlab", "PyPDF2"],
     classifiers = [
         "Programming Language :: Python",
