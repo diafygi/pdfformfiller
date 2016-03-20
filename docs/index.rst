@@ -165,6 +165,7 @@ You don't need anything extra to run the test suite. ::
 However, if you want to generate a coverage report or build the documentation,
 you will need to install the developer dependencies. ::
 
+    sudo apt-get install poppler-utils
     pip install -r dev_requirements.txt
 
     # to get code coverage
