@@ -106,8 +106,8 @@ class PdfFormFiller(defaultdict):
         mediaBox = self.pdf.getPage(pagenum).mediaBox
         x1 = upperLeft[0]
         x2 = lowerRight[0]
-        y1 = mediaBox[3] - mediaBox[1] - lowerRight[1]
-        y2 = mediaBox[3] - mediaBox[1] - upperLeft[1]
+        y1 = float(mediaBox[3] - mediaBox[1] - lowerRight[1])
+        y2 = float(mediaBox[3] - mediaBox[1] - upperLeft[1])
 
         self[pagenum].append(TextField(
             text=text,
@@ -136,7 +136,8 @@ class PdfFormFiller(defaultdict):
 
         # iterate through original pdf pages
         output = PdfFileWriter()
-        for pagenum in xrange(self.pdf.numPages):
+#swong        for pagenum in xrange(self.pdf.numPages):
+        for pagenum in range(self.pdf.numPages):
             existing_page = self.pdf.getPage(pagenum)
 
             # insert text fields if any for this page
