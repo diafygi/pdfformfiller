@@ -136,7 +136,6 @@ class PdfFormFiller(defaultdict):
 
         # iterate through original pdf pages
         output = PdfFileWriter()
-#swong        for pagenum in xrange(self.pdf.numPages):
         for pagenum in range(self.pdf.numPages):
             existing_page = self.pdf.getPage(pagenum)
 
